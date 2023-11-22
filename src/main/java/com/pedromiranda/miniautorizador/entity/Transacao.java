@@ -23,7 +23,39 @@ public class Transacao {
 
     }
 
-    public static Transacao builder() {
-        return new Transacao();
+    public Transacao(String numeroCartao, String senhaCartao, BigDecimal valor) {
+        this.numeroCartao = numeroCartao;
+        this.senhaCartao = senhaCartao;
+        this.valor = valor;
+    }
+
+    public static class TransacaoBuilder {
+        private String numeroCartao;
+        private String senhaCartao;
+        private BigDecimal valor;
+
+
+        public static TransacaoBuilder builder() {
+            return new TransacaoBuilder();
+        }
+
+        public TransacaoBuilder numeroCartao(String numeroCartao) {
+            this.senhaCartao = numeroCartao;
+            return this;
+        }
+
+        public TransacaoBuilder senhaCartao(String senhaCartao) {
+            this.senhaCartao = senhaCartao;
+            return this;
+        }
+
+        public TransacaoBuilder valor(BigDecimal valor) {
+            this.valor = valor;
+            return this;
+        }
+
+        public Transacao build() {
+            return new Transacao(numeroCartao, senhaCartao, valor);
+        }
     }
 }
