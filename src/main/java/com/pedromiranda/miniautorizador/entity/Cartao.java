@@ -29,14 +29,33 @@ public class Cartao {
 
     }
 
-    public Cartao(Long id, String numeroCartao, String senha, String saldo) {
+    public Cartao(Long id, String numeroCartao, String senha) {
         this.id = id;
         this.numeroCartao = numeroCartao;
         this.senha = senha;
         this.saldo = BigDecimal.valueOf(500);
     }
 
-    public static Cartao builder() {
-        return new Cartao();
+    public static class CartaoBuilder {
+        private String numeroCartao;
+        private String senha;
+
+        public static CartaoBuilder builder() {
+            return new CartaoBuilder();
+        }
+
+        public CartaoBuilder numeroCartao(String numeroCartao) {
+            this.numeroCartao = numeroCartao;
+            return this;
+        }
+
+        public CartaoBuilder senha(String senha) {
+            this.senha = senha;
+            return this;
+        }
+
+        public Cartao build() {
+            return new Cartao(null, numeroCartao, senha);
+        }
     }
 }
