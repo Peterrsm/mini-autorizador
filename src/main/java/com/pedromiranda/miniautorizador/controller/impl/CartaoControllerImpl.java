@@ -1,5 +1,6 @@
 package com.pedromiranda.miniautorizador.controller.impl;
 
+import com.pedromiranda.miniautorizador.controller.interfaces.ICartaoController;
 import com.pedromiranda.miniautorizador.entity.Transacao;
 import com.pedromiranda.miniautorizador.entity.dto.CartaoDTO;
 import com.pedromiranda.miniautorizador.entity.dto.ResponseCartaoSaldo;
@@ -10,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class CartaoControllerImpl {
+public class CartaoControllerImpl implements ICartaoController {
 
     @Autowired
     CartaoService service;
