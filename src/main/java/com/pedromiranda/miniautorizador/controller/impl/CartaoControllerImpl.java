@@ -8,7 +8,7 @@ import com.pedromiranda.miniautorizador.service.CartaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CartaoControllerImpl implements ICartaoController {
@@ -16,21 +16,21 @@ public class CartaoControllerImpl implements ICartaoController {
     @Autowired
     CartaoService service;
 
-    @GetMapping("/cartoes/{numero_cartao}")
-    public ResponseEntity<ResponseCartaoSaldo> getCartaoByNumeroCartao(@PathVariable(value = "numero_cartao") String numero_cartao) {
+    @Override
+    public ResponseEntity<ResponseCartaoSaldo> getCartaoByNumeroCartao(String numero_cartao) {
         ResponseCartaoSaldo retorno = service.getCartaoByNumeroCartao(numero_cartao);
         return ResponseEntity.ok()
                 .body(retorno);
     }
 
-    @PostMapping("/cartoes")
-    public ResponseEntity<CartaoDTO> cadastraCartao(@RequestBody CartaoDTO cartao_dto) {
+    @Override
+    public ResponseEntity<CartaoDTO> cadastraCartao(CartaoDTO cartao_dto) {
         CartaoDTO retorno = service.cadastraCartao(cartao_dto);
         return new ResponseEntity<>(retorno, HttpStatus.CREATED);
     }
 
-    @PostMapping("/transacoes")
-    public ResponseEntity<String> realizaTransacao(@RequestBody Transacao transacao) {
+    @Override
+    public ResponseEntity<String> realizaTransacao(Transacao transacao) {
         String retorno = service.realizaTransacao(transacao);
         return new ResponseEntity<>(retorno, HttpStatus.CREATED);
     }
