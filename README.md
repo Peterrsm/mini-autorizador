@@ -16,21 +16,21 @@ Make the REST requests using an REST Clients platform, like Postman:
 
 - POST: localhost:8080/cartoes (create a card)
     - Payload example-
-        - ```
+      ```
       {
       "numeroCartao": "102030405060708090100",
       "senha": "1234"
       }
       ```
     - Response example
-        - ```
+      ```
       {
       "numeroCartao": "102030405060708090100",
       "senha": "1234"
       }
       ```
     - Possible exception(s)
-        - ```
+      ```
       {
       "timestamp": "2023-11-22T12:30:57.9573806",
       "status": 409,
@@ -41,13 +41,13 @@ Make the REST requests using an REST Clients platform, like Postman:
       ```
 - GET: localhost:8080/cartoes/{card_number} (Get card by number)
     - Response example
-        - ```
+      ```
       {
       "saldo": 500.00
       }
       ```
     - Possible exception(s)
-        - ```
+      ```
       {
       "timestamp": "2023-11-22T12:32:02.1555616",
       "status": 422,
@@ -58,7 +58,7 @@ Make the REST requests using an REST Clients platform, like Postman:
       ```
 - POST: localhost:8080/transacoes (Make transaction)
     - Payload example
-        - ```
+      ```
       {
       "numeroCartao": "102030405060708090100",
       "senhaCartao": "1234",
@@ -68,7 +68,7 @@ Make the REST requests using an REST Clients platform, like Postman:
     - Response example
         - ```Transação efetuada com sucesso.```
     - Possible exception(s)
-        - ```
+      ```
       {
       "timestamp": "2023-11-22T12:35:05.528645",
       "status": 422,
@@ -77,7 +77,7 @@ Make the REST requests using an REST Clients platform, like Postman:
       "path": "/transacoes"
       }
       ```
-        - ```
+      ```
       {
       "timestamp": "2023-11-22T12:35:42.5783016",
       "status": 422,
@@ -86,7 +86,7 @@ Make the REST requests using an REST Clients platform, like Postman:
       "path": "/transacoes"
       }
       ```
-        - ```
+      ```
       {
       "timestamp": "2023-11-22T12:36:19.968071",
       "status": 422,
