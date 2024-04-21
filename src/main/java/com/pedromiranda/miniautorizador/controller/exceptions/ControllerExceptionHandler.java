@@ -16,7 +16,13 @@ public class ControllerExceptionHandler {
     public ResponseEntity<StandardError> cardNotFoundException(CardNotFoundException ex, HttpServletRequest request) {
         String err = "CARD DO NOT EXIST";
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
-        StandardError error = new StandardError(LocalDateTime.now(), status.value(), ex.getMessage(), err, request.getRequestURI());
+        StandardError error = StandardError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(status.value())
+                .error(ex.getMessage())
+                .message(err)
+                .path(request.getRequestURI())
+                .build();
 
         return ResponseEntity
                 .status(status)
@@ -27,7 +33,13 @@ public class ControllerExceptionHandler {
     public ResponseEntity<StandardError> cardAlreadyInDatabase(CardAlreadyInDatabaseException ex, HttpServletRequest request) {
         String err = "JÁ EXISTE UM CARTÃO COM ESTA NUMERAÇÃO";
         HttpStatus status = HttpStatus.CONFLICT;
-        StandardError error = new StandardError(LocalDateTime.now(), status.value(), ex.getMessage(), err, request.getRequestURI());
+        StandardError error = StandardError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(status.value())
+                .error(ex.getMessage())
+                .message(err)
+                .path(request.getRequestURI())
+                .build();
 
         return ResponseEntity
                 .status(status)
@@ -38,7 +50,13 @@ public class ControllerExceptionHandler {
     public ResponseEntity<StandardError> wrongCardNumber(WrongCardNumberException ex, HttpServletRequest request) {
         String err = "CARTAO INEXISTENTE ";
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
-        StandardError error = new StandardError(LocalDateTime.now(), status.value(), ex.getMessage(), err, request.getRequestURI());
+        StandardError error = StandardError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(status.value())
+                .error(ex.getMessage())
+                .message(err)
+                .path(request.getRequestURI())
+                .build();
 
         return ResponseEntity
                 .status(status)
@@ -49,7 +67,13 @@ public class ControllerExceptionHandler {
     public ResponseEntity<StandardError> wrongPassword(WrongPasswordException ex, HttpServletRequest request) {
         String err = "SENHA INVALIDA";
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
-        StandardError error = new StandardError(LocalDateTime.now(), status.value(), ex.getMessage(), err, request.getRequestURI());
+        StandardError error = StandardError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(status.value())
+                .error(ex.getMessage())
+                .message(err)
+                .path(request.getRequestURI())
+                .build();
 
         return ResponseEntity
                 .status(status)
@@ -60,7 +84,13 @@ public class ControllerExceptionHandler {
     public ResponseEntity<StandardError> wrongPassword(NoFundException ex, HttpServletRequest request) {
         String err = "SALDO INSUFICIENTE";
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
-        StandardError error = new StandardError(LocalDateTime.now(), status.value(), ex.getMessage(), err, request.getRequestURI());
+        StandardError error = StandardError.builder()
+                .timestamp(LocalDateTime.now())
+                .status(status.value())
+                .error(ex.getMessage())
+                .message(err)
+                .path(request.getRequestURI())
+                .build();
 
         return ResponseEntity
                 .status(status)
