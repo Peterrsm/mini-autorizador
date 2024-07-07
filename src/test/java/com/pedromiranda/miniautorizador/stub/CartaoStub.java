@@ -3,14 +3,12 @@ package com.pedromiranda.miniautorizador.stub;
 import com.pedromiranda.miniautorizador.entity.Cartao;
 import com.pedromiranda.miniautorizador.entity.dto.CartaoDTO;
 
-import java.math.BigDecimal;
-
 public class CartaoStub {
     public Cartao createCartao() {
-        Cartao cartao = new Cartao();
-        cartao.setNumeroCartao("1020304050");
-        cartao.setSaldo(BigDecimal.valueOf(500));
-        cartao.setSenha("1234");
+        Cartao cartao = Cartao.CartaoBuilder.builder()
+                .numeroCartao("1020304050")
+                .senha("1234")
+                .build();
         return cartao;
     }
 
