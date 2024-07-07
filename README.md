@@ -8,7 +8,7 @@ mini-autorizador is a Java Spring Boot service that simulates creation and use o
 - validation of money amount in a card during a transfer
 - validation of number of a card during a transfer
 
-## Ussage
+## Usage
 
 Use the docker-compose to initialize a local MySQL instance with a database named 'miniautorizador'..
 
@@ -95,6 +95,10 @@ Make the REST requests using an REST Clients platform, like Postman:
       "path": "/transacoes"
       }
       ```
+      
+## Swagger
+
+Access the Swagger following 'http://localhost:8080/swagger-ui/' in the browser.
 
 ## Details
 
