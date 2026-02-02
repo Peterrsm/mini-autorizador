@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Component
 public interface CartaoRepository extends JpaRepository<Cartao, Long> {
-    public Cartao findByNumeroCartao(String numero);
+    Cartao findByNumeroCartaoCardNumber(String cardNumber);
 }

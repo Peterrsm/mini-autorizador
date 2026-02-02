@@ -1,7 +1,6 @@
 package com.pedromiranda.miniautorizador.service;
 
-import com.pedromiranda.miniautorizador.entity.Cartao;
-import com.pedromiranda.miniautorizador.entity.Transacao;
+import com.pedromiranda.miniautorizador.entity.*;
 import com.pedromiranda.miniautorizador.entity.dto.CartaoDTO;
 import com.pedromiranda.miniautorizador.entity.dto.ResponseCartaoSaldo;
 import com.pedromiranda.miniautorizador.entity.mapper.CartaoMapper;
@@ -60,18 +59,18 @@ class CartaoServiceTest {
         CartaoDTO result = service.cadastraCartao(dto);
 
         Assertions.assertNotNull(result);
-        Assertions.assertEquals(result.getNumeroCartao(), "1020304050");
-        Assertions.assertNotNull(result.getSenha(), "1234");
+        Assertions.assertEquals(result.getNumeroCartao(), "102030405060");
+        Assertions.assertNotNull(result.getSenha(), "12345678");
     }
 
     @Test
     void getCartaoByNumeroCartaoTest() {
         Cartao cartao = stub.createCartao();
 
-        Mockito.when(repository.findByNumeroCartao("1020304050"))
+        Mockito.when(repository.findByNumeroCartaoCardNumber("102030405060"))
                 .thenReturn(cartao);
 
-        ResponseCartaoSaldo result = service.getCartaoByNumeroCartao("1020304050");
+        ResponseCartaoSaldo result = service.getCartaoByNumeroCartao(new CardNumber("102030405060"));
 
         Assertions.assertNotNull(result);
         Assertions.assertEquals(result.getSaldo(), BigDecimal.valueOf(500));
@@ -82,7 +81,7 @@ class CartaoServiceTest {
         Cartao cartao = stub.createCartao();
         Transacao transacao = stub_transacao.createTransacao();
 
-        Mockito.when(repository.findByNumeroCartao("1020304050"))
+        Mockito.when(repository.findByNumeroCartaoCardNumber("102030405060"))
                 .thenReturn(cartao);
 
         String result = service.realizaTransacao(transacao);
@@ -96,7 +95,7 @@ class CartaoServiceTest {
         Cartao cartao = stub.createCartao();
         Transacao transacao = stub_transacao.createTransacao();
 
-        Mockito.when(repository.findByNumeroCartao(anyString()))
+        Mockito.when(repository.findByNumeroCartaoCardNumber(anyString()))
                 .thenReturn(null);
 
 
@@ -106,10 +105,10 @@ class CartaoServiceTest {
     @Test
     void shouldThrowNoFundException() {
         Cartao cartao = stub.createCartao();
-        cartao.setSaldo(BigDecimal.valueOf(0));
+        cartao.setSaldo(new Saldo(BigDecimal.valueOf(0)));
         Transacao transacao = stub_transacao.createTransacao();
 
-        Mockito.when(repository.findByNumeroCartao("1020304050"))
+        Mockito.when(repository.findByNumeroCartaoCardNumber("102030405060"))
                 .thenReturn(cartao);
 
         Assertions.assertThrows(NoFundException.class, () -> service.realizaTransacao(transacao));
@@ -118,10 +117,10 @@ class CartaoServiceTest {
     @Test
     void shouldThrowWrongPasswordException() {
         Cartao cartao = stub.createCartao();
-        cartao.setSenha("12");
+        cartao.setSenha(new Senha("12345677"));
         Transacao transacao = stub_transacao.createTransacao();
 
-        Mockito.when(repository.findByNumeroCartao("1020304050"))
+        Mockito.when(repository.findByNumeroCartaoCardNumber("102030405060"))
                 .thenReturn(cartao);
 
         Assertions.assertThrows(WrongPasswordException.class, () -> service.realizaTransacao(transacao));
@@ -130,10 +129,10 @@ class CartaoServiceTest {
     @Test
     void shouldThrowWrongCardNumberException() {
         Cartao cartao = stub.createCartao();
-        cartao.setNumeroCartao("54321");
+        cartao.setNumeroCartao(new CardNumber("102030405050"));
         Transacao transacao = stub_transacao.createTransacao();
 
-        Mockito.when(repository.findByNumeroCartao("1020304050"))
+        Mockito.when(repository.findByNumeroCartaoCardNumber("102030405060"))
                 .thenReturn(cartao);
 
         Assertions.assertThrows(WrongCardNumberException.class, () -> service.realizaTransacao(transacao));

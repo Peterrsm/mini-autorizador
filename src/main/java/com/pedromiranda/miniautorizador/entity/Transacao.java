@@ -1,20 +1,15 @@
 package com.pedromiranda.miniautorizador.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.Column;
 import java.math.BigDecimal;
 
-@Getter
-@Setter
 public class Transacao {
 
     @Column(nullable = false)
-    private String numeroCartao;
+    private CardNumber numeroCartao;
 
     @Column(nullable = false)
-    private String senhaCartao;
+    private Senha senhaCartao;
 
     @Column(nullable = false)
     private BigDecimal valor;
@@ -23,10 +18,34 @@ public class Transacao {
 
     }
 
-    public Transacao(String numeroCartao, String senhaCartao, BigDecimal valor) {
+    public Transacao(CardNumber numeroCartao, Senha senhaCartao, BigDecimal valor) {
         this.numeroCartao = numeroCartao;
         this.senhaCartao = senhaCartao;
         this.valor = valor;
+    }
+
+    public void setNumeroCartao(CardNumber numeroCartao) {
+        this.numeroCartao = numeroCartao;
+    }
+
+    public void setSenhaCartao(Senha senhaCartao) {
+        this.senhaCartao = senhaCartao;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public String getSenhaCartao() {
+        return senhaCartao.getSenha();
+    }
+
+    public String getNumeroCartao() {
+        return numeroCartao.getCardNumber();
+    }
+
+    public BigDecimal getValor() {
+        return valor;
     }
 
     public static class TransacaoBuilder {
@@ -40,7 +59,7 @@ public class Transacao {
         }
 
         public TransacaoBuilder numeroCartao(String numeroCartao) {
-            this.senhaCartao = numeroCartao;
+            this.numeroCartao = numeroCartao;
             return this;
         }
 
@@ -55,7 +74,7 @@ public class Transacao {
         }
 
         public Transacao build() {
-            return new Transacao(numeroCartao, senhaCartao, valor);
+            return new Transacao(new CardNumber(numeroCartao), new Senha(senhaCartao), valor);
         }
     }
 }

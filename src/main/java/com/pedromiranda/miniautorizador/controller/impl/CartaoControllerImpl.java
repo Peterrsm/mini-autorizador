@@ -1,6 +1,7 @@
 package com.pedromiranda.miniautorizador.controller.impl;
 
 import com.pedromiranda.miniautorizador.controller.interfaces.ICartaoController;
+import com.pedromiranda.miniautorizador.entity.CardNumber;
 import com.pedromiranda.miniautorizador.entity.Transacao;
 import com.pedromiranda.miniautorizador.entity.dto.CartaoDTO;
 import com.pedromiranda.miniautorizador.entity.dto.ResponseCartaoSaldo;
@@ -17,7 +18,7 @@ public class CartaoControllerImpl implements ICartaoController {
     CartaoService service;
 
     @Override
-    public ResponseEntity<ResponseCartaoSaldo> getCartaoByNumeroCartao(String numero_cartao) {
+    public ResponseEntity<ResponseCartaoSaldo> getCartaoByNumeroCartao(CardNumber numero_cartao) {
         ResponseCartaoSaldo retorno = service.getCartaoByNumeroCartao(numero_cartao);
         return ResponseEntity.ok()
                 .body(retorno);

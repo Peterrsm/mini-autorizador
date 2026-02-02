@@ -1,5 +1,6 @@
 package com.pedromiranda.miniautorizador.controller.impl;
 
+import com.pedromiranda.miniautorizador.entity.CardNumber;
 import com.pedromiranda.miniautorizador.entity.Cartao;
 import com.pedromiranda.miniautorizador.entity.Transacao;
 import com.pedromiranda.miniautorizador.entity.dto.CartaoDTO;
@@ -58,12 +59,12 @@ class CartaoControllerImplTest {
     void getCartaoByNumeroCartaoTest() {
         Cartao cartao = stub.createCartao();
 
-        Mockito.when(service.getCartaoByNumeroCartao("1020304050"))
+        Mockito.when(service.getCartaoByNumeroCartao(new CardNumber("102030405060")))
                 .thenReturn(ResponseCartaoSaldo.cartaoToResponseCartaoSaldo(cartao));
 
-        ResponseEntity<ResponseCartaoSaldo> result = controller.getCartaoByNumeroCartao("1020304050");
+        ResponseEntity<ResponseCartaoSaldo> result = controller.getCartaoByNumeroCartao(new CardNumber("102030405060"));
 
-        Assertions.assertNotNull(controller.getCartaoByNumeroCartao("1020304050"));
+        Assertions.assertNotNull(controller.getCartaoByNumeroCartao(new CardNumber("102030405060")));
         Assertions.assertEquals(result.getStatusCode(), HttpStatus.OK);
         Assertions.assertEquals(result.getStatusCodeValue(), 200);
         Assertions.assertEquals(result.getBody().getSaldo(), BigDecimal.valueOf(500));
@@ -81,8 +82,8 @@ class CartaoControllerImplTest {
 
         Assertions.assertNotNull(controller.cadastraCartao(cartao_dto));
         Assertions.assertEquals(result.getStatusCode(), HttpStatus.CREATED);
-        Assertions.assertEquals(result.getBody().getNumeroCartao(), "1020304050");
-        Assertions.assertEquals(result.getBody().getSenha(), "1234");
+        Assertions.assertEquals(result.getBody().getNumeroCartao(), "102030405060");
+        Assertions.assertEquals(result.getBody().getSenha(), "12345678");
 
     }
 

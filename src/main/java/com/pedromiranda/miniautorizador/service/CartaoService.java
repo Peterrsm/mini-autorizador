@@ -1,6 +1,8 @@
 package com.pedromiranda.miniautorizador.service;
 
+import com.pedromiranda.miniautorizador.entity.CardNumber;
 import com.pedromiranda.miniautorizador.entity.Cartao;
+import com.pedromiranda.miniautorizador.entity.Saldo;
 import com.pedromiranda.miniautorizador.entity.Transacao;
 import com.pedromiranda.miniautorizador.entity.dto.CartaoDTO;
 import com.pedromiranda.miniautorizador.entity.dto.ResponseCartaoSaldo;
@@ -32,17 +34,19 @@ public class CartaoService {
         }
     }
 
-    public ResponseCartaoSaldo getCartaoByNumeroCartao(String numero_cartao) {
-        try {
-            return ResponseCartaoSaldo.cartaoToResponseCartaoSaldo(repository.findByNumeroCartao(numero_cartao));
-        } catch (Exception e) {
+    public ResponseCartaoSaldo getCartaoByNumeroCartao(CardNumber numero_cartao) {
+        Cartao cartao = repository.findByNumeroCartaoCardNumber(numero_cartao.getCardNumber());
+
+        if (cartao == null) {
             throw new CardNotFoundException();
         }
+
+        return ResponseCartaoSaldo.cartaoToResponseCartaoSaldo(cartao);
     }
 
     public String realizaTransacao(Transacao transacao) {
         try {
-            Cartao cartao = repository.findByNumeroCartao(transacao.getNumeroCartao());
+            Cartao cartao = repository.findByNumeroCartaoCardNumber(transacao.getNumeroCartao());
 
             validateSaldo(cartao, transacao);
 
@@ -50,7 +54,7 @@ public class CartaoService {
                     transacao.getNumeroCartao());
 
             try {
-                cartao.setSaldo(cartao.getSaldo().subtract(transacao.getValor()));
+                cartao.setSaldo(new Saldo(cartao.getSaldo().getSaldo().subtract(transacao.getValor())));
 
                 System.out.println("Transação efetuada com sucesso.");
 
@@ -76,15 +80,15 @@ public class CartaoService {
             throw new CardNotFoundException();
         }
 
-        if (!cartao.getNumeroCartao().toString().equals(transacao.getNumeroCartao().toString())) {
+        if (!cartao.getNumeroCartao().getCardNumber().equals(transacao.getNumeroCartao())) {
             throw new WrongCardNumberException();
         }
 
-        if (!cartao.getSenha().toString().equals(transacao.getSenhaCartao().toString())) {
+        if (!cartao.getSenha().getSenha().equals(transacao.getSenhaCartao())) {
             throw new WrongPasswordException();
         }
 
-        if (cartao.getSaldo().compareTo(transacao.getValor()) < 0) {
+        if (cartao.getSaldo().getSaldo().compareTo(transacao.getValor()) < 0) {
             throw new NoFundException();
         }
     }

@@ -12,7 +12,11 @@ public class ResponseCartaoSaldo implements Serializable {
 
     public static ResponseCartaoSaldo cartaoToResponseCartaoSaldo(Cartao cartao) {
         ResponseCartaoSaldo response = new ResponseCartaoSaldo();
-        response.saldo = cartao.getSaldo();
+        response.saldo = cartao.getSaldo().getSaldo();
         return response;
+    }
+
+    public BigDecimal getSaldo() {
+        return saldo;
     }
 }

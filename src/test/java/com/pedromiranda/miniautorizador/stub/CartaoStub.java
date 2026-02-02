@@ -1,21 +1,24 @@
 package com.pedromiranda.miniautorizador.stub;
 
+import com.pedromiranda.miniautorizador.entity.CardNumber;
 import com.pedromiranda.miniautorizador.entity.Cartao;
+import com.pedromiranda.miniautorizador.entity.Senha;
 import com.pedromiranda.miniautorizador.entity.dto.CartaoDTO;
 
 public class CartaoStub {
     public Cartao createCartao() {
-        Cartao cartao = Cartao.CartaoBuilder.builder()
-                .numeroCartao("1020304050")
-                .senha("1234")
+        return Cartao.CartaoBuilder.builder()
+                .numeroCartao(new CardNumber("102030405060"))
+                .senha(new Senha("12345678"))
                 .build();
-        return cartao;
     }
 
     public CartaoDTO createDTO() {
-        CartaoDTO dto = new CartaoDTO();
-        dto.setSenha("1234");
-        dto.setNumeroCartao("1020304050");
-        return dto;
+        Cartao cartao = new Cartao();
+
+        cartao.setSenha(new Senha("12345678"));
+        cartao.setNumeroCartao(new CardNumber("102030405060"));
+
+        return CartaoDTO.toDTO(cartao);
     }
 }
