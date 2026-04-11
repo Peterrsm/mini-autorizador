@@ -1,4 +1,4 @@
-package com.pedromiranda.miniautorizador.service;
+package com.pedromiranda.miniautorizador.service.Impl;
 
 import com.pedromiranda.miniautorizador.entity.CardNumber;
 import com.pedromiranda.miniautorizador.entity.Cartao;
@@ -9,11 +9,14 @@ import com.pedromiranda.miniautorizador.entity.dto.ResponseCartaoSaldo;
 import com.pedromiranda.miniautorizador.entity.mapper.CartaoMapper;
 import com.pedromiranda.miniautorizador.repository.CartaoRepository;
 import com.pedromiranda.miniautorizador.service.exceptions.*;
+import com.pedromiranda.miniautorizador.service.interfaces.ICartaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class CartaoService {
+public class CartaoServiceImpl implements ICartaoService {
 
     @Autowired
     CartaoMapper mapper;
@@ -21,6 +24,7 @@ public class CartaoService {
     @Autowired
     CartaoRepository repository;
 
+    @Override
     public CartaoDTO cadastraCartao(CartaoDTO cartao_dto) {
         try {
             System.out.println("Inserindo novo cartão...");
@@ -34,6 +38,7 @@ public class CartaoService {
         }
     }
 
+    @Override
     public ResponseCartaoSaldo getCartaoByNumeroCartao(CardNumber numero_cartao) {
         Cartao cartao = repository.findByNumeroCartaoCardNumber(numero_cartao.getCardNumber());
 
@@ -44,6 +49,12 @@ public class CartaoService {
         return ResponseCartaoSaldo.cartaoToResponseCartaoSaldo(cartao);
     }
 
+    @Override
+    public List<Cartao> getCartoes() {
+        return repository.findAll();
+    }
+
+    @Override
     public String realizaTransacao(Transacao transacao) {
         try {
             Cartao cartao = repository.findByNumeroCartaoCardNumber(transacao.getNumeroCartao());

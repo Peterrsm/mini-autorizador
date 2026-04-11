@@ -5,6 +5,7 @@ import com.pedromiranda.miniautorizador.entity.dto.CartaoDTO;
 import com.pedromiranda.miniautorizador.entity.dto.ResponseCartaoSaldo;
 import com.pedromiranda.miniautorizador.entity.mapper.CartaoMapper;
 import com.pedromiranda.miniautorizador.repository.CartaoRepository;
+import com.pedromiranda.miniautorizador.service.Impl.CartaoServiceImpl;
 import com.pedromiranda.miniautorizador.service.exceptions.CardNotFoundException;
 import com.pedromiranda.miniautorizador.service.exceptions.NoFundException;
 import com.pedromiranda.miniautorizador.service.exceptions.WrongCardNumberException;
@@ -35,7 +36,7 @@ class CartaoServiceTest {
     CartaoRepository repository;
 
     @InjectMocks
-    CartaoService service;
+    CartaoServiceImpl service;
 
     CartaoStub stub = new CartaoStub();
     TransacaoStub stub_transacao = new TransacaoStub();
