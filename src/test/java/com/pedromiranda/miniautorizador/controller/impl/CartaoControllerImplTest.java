@@ -6,7 +6,7 @@ import com.pedromiranda.miniautorizador.entity.Transacao;
 import com.pedromiranda.miniautorizador.entity.dto.CartaoDTO;
 import com.pedromiranda.miniautorizador.entity.dto.ResponseCartaoSaldo;
 import com.pedromiranda.miniautorizador.repository.CartaoRepository;
-import com.pedromiranda.miniautorizador.service.CartaoService;
+import com.pedromiranda.miniautorizador.service.Impl.CartaoServiceImpl;
 import com.pedromiranda.miniautorizador.service.exceptions.CardNotFoundException;
 import com.pedromiranda.miniautorizador.service.exceptions.NoFundException;
 import com.pedromiranda.miniautorizador.service.exceptions.WrongCardNumberException;
@@ -39,7 +39,7 @@ import static org.mockito.ArgumentMatchers.any;
 class CartaoControllerImplTest {
 
     @Mock
-    CartaoService service;
+    CartaoServiceImpl service;
 
     @Mock
     CartaoRepository repository;

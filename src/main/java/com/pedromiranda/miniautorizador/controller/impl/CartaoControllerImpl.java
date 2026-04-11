@@ -5,17 +5,19 @@ import com.pedromiranda.miniautorizador.entity.CardNumber;
 import com.pedromiranda.miniautorizador.entity.Transacao;
 import com.pedromiranda.miniautorizador.entity.dto.CartaoDTO;
 import com.pedromiranda.miniautorizador.entity.dto.ResponseCartaoSaldo;
-import com.pedromiranda.miniautorizador.service.CartaoService;
+import com.pedromiranda.miniautorizador.service.Impl.CartaoServiceImpl;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Tag(name = "Cartões", description = "Endpoints para gestão e operações de cartões de débito")
 public class CartaoControllerImpl implements ICartaoController {
 
     @Autowired
-    CartaoService service;
+    CartaoServiceImpl service;
 
     @Override
     public ResponseEntity<ResponseCartaoSaldo> getCartaoByNumeroCartao(CardNumber numero_cartao) {

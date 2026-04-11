@@ -10,98 +10,74 @@ mini-autorizador is a Java Spring Boot service that simulates creation and use o
 
 ## Usage
 
-Use the docker-compose to initialize a local MySQL instance with a database named 'miniautorizador'..
+Use the docker-compose to initialize a local MySQL instance with a database named 'miniautorizador'.
 
 Make the REST requests using an REST Clients platform, like Postman:
 
-- POST: localhost:8080/cartoes (create a card)
-    - Payload example-
-      ```
+- **POST: localhost:8080/cartoes** (create a card)
+    - Payload example:
+      ```json
       {
-      "numeroCartao": "102030405060708090100",
-      "senha": "1234"
+        "numeroCartao": "102030405060708090100",
+        "senha": "12345678"
       }
       ```
-    - Response example
-      ```
+    - Response example:
+      ```json
       {
-      "numeroCartao": "102030405060708090100",
-      "senha": "1234"
+        "numeroCartao": "102030405060708090100",
+        "senha": "12345678"
       }
       ```
-    - Possible exception(s)
-      ```
+    - Possible exception(s):
+      ```json
       {
-      "timestamp": "2023-11-22T12:30:57.9573806",
-      "status": 409,
-      "error": "Erro na numeração",
-      "message": "JÁ EXISTE UM CARTÃO COM ESTA NUMERAÇÃO",
-      "path": "/cartoes"
+        "status": 409,
+        "message": "JÁ EXISTE UM CARTÃO COM ESTA NUMERAÇÃO"
       }
       ```
-- GET: localhost:8080/cartoes/{card_number} (Get card by number)
-    - Response example
-      ```
-      {
-      "saldo": 500.00
-      }
-      ```
-    - Possible exception(s)
-      ```
-      {
-      "timestamp": "2023-11-22T12:32:02.1555616",
-      "status": 422,
-      "error": "Não encontrado",
-      "message": "CARD DO NOT EXIST",
-      "path": "/cartoes/1020304050607080901000"
-      }
-      ```
-- POST: localhost:8080/transacoes (Make transaction)
-    - Payload example
-      ```
-      {
-      "numeroCartao": "102030405060708090100",
-      "senhaCartao": "1234",
-      "valor": 100.00
-      }
-      ```
-    - Response example
-        - ```Transação efetuada com sucesso.```
-    - Possible exception(s)
-      ```
-      {
-      "timestamp": "2023-11-22T12:35:05.528645",
-      "status": 422,
-      "error": "Não encontrado",
-      "message": "CARD DO NOT EXIST",
-      "path": "/transacoes"
-      }
-      ```
-      ```
-      {
-      "timestamp": "2023-11-22T12:35:42.5783016",
-      "status": 422,
-      "error": "Senha incorreta.",
-      "message": "SENHA INVALIDA",
-      "path": "/transacoes"
-      }
-      ```
-      ```
-      {
-      "timestamp": "2023-11-22T12:36:19.968071",
-      "status": 422,
-      "error": "Erro com saldo",
-      "message": "SALDO INSUFICIENTE",
-      "path": "/transacoes"
-      }
-      ```
-      
-## Swagger
 
-Access the Swagger following 'http://localhost:8080/swagger-ui/' in the browser.
+- **GET: localhost:8080/cartoes/{card_number}** (Get card by number)
+    - Response example:
+      ```json
+      {
+        "saldo": 500.00
+      }
+      ```
+
+- **POST: localhost:8080/transacoes** (Make transaction)
+    - Payload example:
+      ```json
+      {
+        "numeroCartao": "102030405060708090100",
+        "senhaCartao": "12345678",
+        "valor": 100.00
+      }
+      ```
+
+## Service Interfaces
+
+O projeto expõe duas interfaces principais para interação:
+
+### 1. Swagger (API Documentation)
+
+Fornece uma interface interativa para testar todos os endpoints REST.
+
+- **URL:** [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+- **Spec JSON:** [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
+
+### 2. Vaadin Dashboard (Management Interface)
+
+Interface gráfica para visualização e gestão interna.
+
+- **URL:** [http://localhost:8080/painel/dashboard](http://localhost:8080/painel/dashboard)
 
 ## Details
 
 The code use Spring Data to persist the records in the database and use:
 
-- Builder design pattern to make the code easier to read and expand.
+- **Builder design pattern**: to make the code easier to read and expand.
+- **Springdoc OpenAPI**: for automated API documentation.
+- **Vaadin Flow**: for the management dashboard interface, isolated in the `/painel` context to avoid conflicts with
+  REST endpoints.
+- **Spring Security**: configured to allow public access to documentation while protecting internal routes.

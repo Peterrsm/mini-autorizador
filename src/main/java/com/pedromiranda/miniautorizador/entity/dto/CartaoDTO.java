@@ -6,6 +6,14 @@ public class CartaoDTO {
     private String numeroCartao;
     private String senha;
 
+    public CartaoDTO() {
+    }
+
+    public CartaoDTO(String numeroCartao, String senha) {
+        this.numeroCartao = numeroCartao;
+        this.senha = senha;
+    }
+
     public static CartaoDTO toDTO(Cartao cartao) {
         CartaoDTO dto = new CartaoDTO();
         dto.setNumeroCartao(cartao.getNumeroCartao().toString());
