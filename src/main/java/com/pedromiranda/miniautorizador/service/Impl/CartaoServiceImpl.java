@@ -10,14 +10,18 @@ import com.pedromiranda.miniautorizador.entity.mapper.CartaoMapper;
 import com.pedromiranda.miniautorizador.repository.CartaoRepository;
 import com.pedromiranda.miniautorizador.service.exceptions.*;
 import com.pedromiranda.miniautorizador.service.interfaces.ICartaoService;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class CartaoServiceImpl implements ICartaoService {
 
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(CartaoServiceImpl.class);
     @Autowired
     CartaoMapper mapper;
 
@@ -27,8 +31,8 @@ public class CartaoServiceImpl implements ICartaoService {
     @Override
     public CartaoDTO cadastraCartao(CartaoDTO cartao_dto) {
         try {
-            System.out.println("Inserindo novo cartão...");
-            System.out.println(cartao_dto.toString());
+            log.info("Inserindo novo cartão com número: {}", cartao_dto.getNumeroCartao());
+            log.info("{}", cartao_dto.toString());
             Cartao cartao = mapper.toCartao(cartao_dto);
 
             return CartaoDTO.toDTO(repository.save(cartao));
@@ -50,8 +54,13 @@ public class CartaoServiceImpl implements ICartaoService {
     }
 
     @Override
-    public List<Cartao> getCartoes() {
-        return repository.findAll();
+    public List getCartoes() {
+        try {
+            return repository.findAll();
+        } catch (Exception e) {
+            log.error("Erro ao buscar todos os cartões", e);
+            throw e;
+        }
     }
 
     @Override
@@ -61,17 +70,17 @@ public class CartaoServiceImpl implements ICartaoService {
 
             validateSaldo(cartao, transacao);
 
-            System.out.println("Efetuando transferencia de R$" + transacao.getValor() + " do cartão de numeração: " +
+            log.info("Efetuando transferencia de R${} do cartão de numeração {}",
+                    transacao.getValor(),
                     transacao.getNumeroCartao());
-
             try {
                 cartao.setSaldo(new Saldo(cartao.getSaldo().getSaldo().subtract(transacao.getValor())));
 
-                System.out.println("Transação efetuada com sucesso.");
-
                 repository.save(cartao);
+
+                log.info("Transação efetuada com sucesso.");
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                log.error(e.getMessage());
             }
         } catch (NoFundException e) {
             throw new NoFundException();

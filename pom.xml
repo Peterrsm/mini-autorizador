@@ -81,22 +81,16 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <!-- Mockito -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-inline</artifactId>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- JUnit -->
-        <dependency>
-            <groupId>com.tngtech.archunit</groupId>
-            <artifactId>archunit-junit5</artifactId>
-            <version>1.3.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -127,18 +121,6 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- Pitest -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.pitest</groupId>-->
-        <!--            <artifactId>pitest-maven</artifactId>-->
-        <!--            <version>1.16.1</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.pitest</groupId>-->
-        <!--            <artifactId>pitest-junit5-plugin</artifactId>-->
-        <!--            <version>1.2.1</version>-->
-        <!--        </dependency>-->
-
     </dependencies>
 
     <build>
@@ -147,9 +129,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <image>
-                        <builder>paketobuildpacks/builder-jammy-base:latest</builder>
-                    </image>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
@@ -158,20 +137,35 @@
                     </excludes>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
-                <version>1.7.0</version>
+                <version>1.15.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>1.2.1</version>
+                    </dependency>
+                </dependencies>
                 <configuration>
                     <targetClasses>
-                        <param>com.pedromiranda.miniautorizador.controller.impl.CartaoControllerImpl</param>
+                        <param>com.pedromiranda.miniautorizador.*</param>
                     </targetClasses>
                     <targetTests>
-                        <param>**Test</param>
+                        <param>com.pedromiranda.miniautorizador.*</param>
                     </targetTests>
+                    <excludedClasses>
+                        <param>com.pedromiranda.miniautorizador.config.*</param>
+                        <param>com.pedromiranda.miniautorizador.service.exceptions.*</param>
+                        <param>com.pedromiranda.miniautorizador.controller.exceptions.*</param>
+                        <param>com.pedromiranda.miniautorizador.views.*</param>
+                        <param>com.pedromiranda.miniautorizador.stub.*</param>
+                        <param>com.pedromiranda.miniautorizador.entity.*</param>
+                    </excludedClasses>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>

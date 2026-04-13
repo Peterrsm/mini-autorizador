@@ -11,7 +11,7 @@ public class TransacaoStub {
         Transacao transacao = new Transacao();
         transacao.setSenhaCartao(new Senha("12345678"));
         transacao.setNumeroCartao(new CardNumber("102030405060"));
-        transacao.setValor(BigDecimal.valueOf(100));
+        transacao.setValor(BigDecimal.valueOf(500));
         return transacao;
     }
 }

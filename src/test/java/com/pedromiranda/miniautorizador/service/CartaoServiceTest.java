@@ -6,10 +6,7 @@ import com.pedromiranda.miniautorizador.entity.dto.ResponseCartaoSaldo;
 import com.pedromiranda.miniautorizador.entity.mapper.CartaoMapper;
 import com.pedromiranda.miniautorizador.repository.CartaoRepository;
 import com.pedromiranda.miniautorizador.service.Impl.CartaoServiceImpl;
-import com.pedromiranda.miniautorizador.service.exceptions.CardNotFoundException;
-import com.pedromiranda.miniautorizador.service.exceptions.NoFundException;
-import com.pedromiranda.miniautorizador.service.exceptions.WrongCardNumberException;
-import com.pedromiranda.miniautorizador.service.exceptions.WrongPasswordException;
+import com.pedromiranda.miniautorizador.service.exceptions.*;
 import com.pedromiranda.miniautorizador.stub.CartaoStub;
 import com.pedromiranda.miniautorizador.stub.TransacaoStub;
 import org.junit.jupiter.api.Assertions;
@@ -23,7 +20,9 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 
 @ExtendWith(MockitoExtension.class)
@@ -78,6 +77,13 @@ class CartaoServiceTest {
     }
 
     @Test
+    void shouldThrowExceptionWithNoDatabaseConnection() {
+        Mockito.when(repository.findAll()).thenThrow(new RuntimeException("DB offline"));
+
+        Assertions.assertThrows(RuntimeException.class, () -> service.getCartoes());
+    }
+
+    @Test
     void realizaTransacaoTest() {
         Cartao cartao = stub.createCartao();
         Transacao transacao = stub_transacao.createTransacao();
@@ -92,15 +98,27 @@ class CartaoServiceTest {
     }
 
     @Test
+    void shouldReturnCardListWiothSuccess() {
+        List<Cartao> listaMock = List.of(stub.createCartao());
+        Mockito.when(repository.findAll()).thenReturn(listaMock);
+
+        List<Cartao> resultado = service.getCartoes();
+
+        Assertions.assertFalse(resultado.isEmpty());
+        Assertions.assertEquals(1, resultado.size());
+
+        Assertions.assertEquals(listaMock.get(0).getNumeroCartao(), resultado.get(0).getNumeroCartao());
+    }
+
+    @Test
     void shouldThrowCardNotFoundException() {
-        Cartao cartao = stub.createCartao();
-        Transacao transacao = stub_transacao.createTransacao();
+        CardNumber numeroNaoExistente = new CardNumber("000000000000");
 
-        Mockito.when(repository.findByNumeroCartaoCardNumber(anyString()))
-                .thenReturn(null);
+        Mockito.when(repository.findByNumeroCartaoCardNumber(any())).thenReturn(null);
 
-
-        Assertions.assertThrows(CardNotFoundException.class, () -> service.realizaTransacao(transacao));
+        Assertions.assertThrows(CardNotFoundException.class, () -> {
+            service.getCartaoByNumeroCartao(numeroNaoExistente);
+        });
     }
 
     @Test
@@ -138,4 +156,17 @@ class CartaoServiceTest {
 
         Assertions.assertThrows(WrongCardNumberException.class, () -> service.realizaTransacao(transacao));
     }
+
+    @Test
+    void shouldThrowCardAlreadyInDatabaseException() {
+        Cartao cartao = stub.createCartao();
+        CartaoDTO dto = CartaoDTO.toDTO(cartao);
+
+        Mockito.when(repository.save(any())).thenThrow(new RuntimeException());
+
+        Assertions.assertThrows(CardAlreadyInDatabaseException.class, () -> {
+            service.cadastraCartao(dto);
+        });
+    }
+
 }

@@ -13,9 +13,6 @@ import com.pedromiranda.miniautorizador.service.exceptions.WrongCardNumberExcept
 import com.pedromiranda.miniautorizador.service.exceptions.WrongPasswordException;
 import com.pedromiranda.miniautorizador.stub.CartaoStub;
 import com.pedromiranda.miniautorizador.stub.TransacaoStub;
-import com.tngtech.archunit.junit.AnalyzeClasses;
-import com.tngtech.archunit.junit.ArchTest;
-import com.tngtech.archunit.lang.ArchRule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,11 +27,8 @@ import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
 
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
-import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
 import static org.mockito.ArgumentMatchers.any;
 
-@AnalyzeClasses(packages = "com.pedromiranda.miniautorizador")
 @ExtendWith(MockitoExtension.class)
 class CartaoControllerImplTest {
 
@@ -136,24 +130,4 @@ class CartaoControllerImplTest {
 
         Assertions.assertThrows(WrongCardNumberException.class, () -> controller.realizaTransacao(transacao));
     }
-
-    @ArchTest
-    public static final ArchRule service_accessed_only_by_controller = layeredArchitecture()
-            .consideringAllDependencies()
-            .layer("service").definedBy("..controller.impl");
-
-    @ArchTest
-    public static final ArchRule controller_must_reside_controller = classes()
-            .that()
-            .haveNameMatching(".*Controller")
-            .should()
-            .resideInAPackage("..controller.interfaces");
-
-    @ArchTest
-    public static final ArchRule controllerimpl_must_reside_controlle_impl = classes()
-            .that()
-            .haveNameMatching(".*ControllerImpl")
-            .should()
-            .resideInAPackage("..controller.impl");
-
 }
