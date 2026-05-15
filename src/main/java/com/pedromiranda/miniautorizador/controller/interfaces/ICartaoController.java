@@ -15,6 +15,10 @@ import javax.validation.Valid;
 
 public interface ICartaoController {
 
+    @Operation(summary = "Pesquisa cartões", description = "Retorna todos os cartões cadastrados no banco de dados")
+    @GetMapping("/cartoes")
+    ResponseEntity<String> getCartoes();
+
     @Operation(summary = "Pesquisa cartão por Número", description = "Retorna existência do cartão com base no número inserido")
     @GetMapping("/cartoes/{numero_cartao}")
     ResponseEntity<ResponseCartaoSaldo> getCartaoByNumeroCartao(@PathVariable(value = "numero_cartao") CardNumber numero_cartao);
@@ -26,4 +30,5 @@ public interface ICartaoController {
     @Operation(summary = "Realiza uma transação", description = "Valida senha, saldo e existência do cartão antes de debitar")
     @PostMapping("/transacoes")
     ResponseEntity<String> realizaTransacao(@Valid @RequestBody Transacao transacao);
+
 }

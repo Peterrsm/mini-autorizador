@@ -16,16 +16,13 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 import java.math.BigDecimal;
 
-/**
- * A anotação @Route registra esta classe como uma rota de navegação.
- * O Vaadin cuida automaticamente do mapeamento, dispensando o uso de Controllers REST para a UI.
- */
 @Route("dashboard")
+@AnonymousAllowed
 public class DashboardView extends VerticalLayout {
-
     private final CartaoServiceImpl service;
 
     // Grid definido como atributo de classe para permitir atualização de estado (Refresh)

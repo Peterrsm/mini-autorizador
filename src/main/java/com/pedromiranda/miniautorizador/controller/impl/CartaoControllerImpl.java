@@ -12,12 +12,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @Tag(name = "Cartões", description = "Endpoints para gestão e operações de cartões de débito")
 public class CartaoControllerImpl implements ICartaoController {
 
     @Autowired
     CartaoServiceImpl service;
+
+    @Override
+    public ResponseEntity<String> getCartoes() {
+        List cartoes = service.getCartoes();
+
+        return ResponseEntity.ok(cartoes.toString());
+    }
 
     @Override
     public ResponseEntity<ResponseCartaoSaldo> getCartaoByNumeroCartao(CardNumber numero_cartao) {
