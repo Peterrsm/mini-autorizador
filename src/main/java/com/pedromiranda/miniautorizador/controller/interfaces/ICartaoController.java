@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
+import java.util.List;
 
 public interface ICartaoController {
 
     @Operation(summary = "Pesquisa cartões", description = "Retorna todos os cartões cadastrados no banco de dados")
     @GetMapping("/cartoes")
-    ResponseEntity<String> getCartoes();
+    ResponseEntity<List<CartaoDTO>> getCartoes();
 
     @Operation(summary = "Pesquisa cartão por Número", description = "Retorna existência do cartão com base no número inserido")
     @GetMapping("/cartoes/{numero_cartao}")

@@ -5,7 +5,7 @@ import com.pedromiranda.miniautorizador.entity.CardNumber;
 import com.pedromiranda.miniautorizador.entity.Transacao;
 import com.pedromiranda.miniautorizador.entity.dto.CartaoDTO;
 import com.pedromiranda.miniautorizador.entity.dto.ResponseCartaoSaldo;
-import com.pedromiranda.miniautorizador.service.Impl.CartaoServiceImpl;
+import com.pedromiranda.miniautorizador.service.interfaces.ICartaoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,13 +19,15 @@ import java.util.List;
 public class CartaoControllerImpl implements ICartaoController {
 
     @Autowired
-    CartaoServiceImpl service;
+    ICartaoService service;
+
+    public CartaoControllerImpl(ICartaoService service) {
+        this.service = service;
+    }
 
     @Override
-    public ResponseEntity<String> getCartoes() {
-        List cartoes = service.getCartoes();
-
-        return ResponseEntity.ok(cartoes.toString());
+    public ResponseEntity<List<CartaoDTO>> getCartoes() {
+        return ResponseEntity.ok(service.getCartoes());
     }
 
     @Override
@@ -44,6 +46,6 @@ public class CartaoControllerImpl implements ICartaoController {
     @Override
     public ResponseEntity<String> realizaTransacao(Transacao transacao) {
         String retorno = service.realizaTransacao(transacao);
-        return new ResponseEntity<>(retorno, HttpStatus.CREATED);
+        return new ResponseEntity<>(retorno, HttpStatus.OK);
     }
 }
