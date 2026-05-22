@@ -17,7 +17,7 @@ public class JwtService {
     private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     // Expiração de 1 dia (em milissegundos)
-    private static final long JWT_EXPIRATION = 86400000;
+    private static final long JWT_EXPIRATION = 60000;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
