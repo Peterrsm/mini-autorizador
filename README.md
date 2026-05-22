@@ -14,7 +14,7 @@ Use the docker-compose to initialize a local MySQL instance with a database name
 
 Make the REST requests using an REST Clients platform, like Postman:
 
-- **POST: localhost:8080/cartoes** (create a card)
+- **POST: localhost:8080/api/cartoes** (create a card)
     - Payload example:
       ```json
       {
@@ -32,12 +32,15 @@ Make the REST requests using an REST Clients platform, like Postman:
     - Possible exception(s):
       ```json
       {
-        "status": 409,
-        "message": "JÁ EXISTE UM CARTÃO COM ESTA NUMERAÇÃO"
+      "timestamp": "2026-05-22T18:56:54.7644605",
+      "status": 409,
+      "error": "Erro na numeração",
+      "message": "JÁ EXISTE UM CARTÃO COM ESTA NUMERAÇÃO",
+      "path": "/api/cartoes"
       }
       ```
 
-- **GET: localhost:8080/cartoes/{card_number}** (Get card by number)
+- **GET: localhost:8080/api/cartoes/{card_number}** (Get card by number)
     - Response example:
       ```json
       {
@@ -63,7 +66,7 @@ O projeto expõe duas interfaces principais para interação:
 
 Fornece uma interface interativa para testar todos os endpoints REST.
 
-- **URL:** [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+- **Swagger:** [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 - **Spec JSON:** [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
 
 ### 2. Vaadin Dashboard (Management Interface)
@@ -74,7 +77,7 @@ Interface gráfica para visualização e gestão interna.
 
 ## Details
 
-The code use Spring Data to persist the records in the database and use:
+The API use Spring Data to persist the records in the database and use:
 
 - **Builder design pattern**: to make the code easier to read and expand.
 - **Springdoc OpenAPI**: for automated API documentation.
