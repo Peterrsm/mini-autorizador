@@ -1,5 +1,6 @@
 package com.pedromiranda.miniautorizador.config.security;
 
+import com.pedromiranda.miniautorizador.security.JwtAuthenticationFilter;
 import com.vaadin.flow.spring.security.VaadinWebSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

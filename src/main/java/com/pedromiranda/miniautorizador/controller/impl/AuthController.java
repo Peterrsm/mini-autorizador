@@ -1,6 +1,6 @@
 package com.pedromiranda.miniautorizador.controller.impl;
 
-import com.pedromiranda.miniautorizador.config.security.JwtService;
+import com.pedromiranda.miniautorizador.security.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,7 +29,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> request) {
-        // Valida as credenciais contra o UserDetailsService em memória (admin / admin)
+        // Valida as credenciais contra o UserDetailsService em memória
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.get("username"), request.get("password"))
         );

@@ -1,4 +1,4 @@
-package com.pedromiranda.miniautorizador.config.security;
+package com.pedromiranda.miniautorizador.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;

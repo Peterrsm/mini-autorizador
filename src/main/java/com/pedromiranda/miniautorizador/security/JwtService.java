@@ -1,4 +1,4 @@
-package com.pedromiranda.miniautorizador.config.security;
+package com.pedromiranda.miniautorizador.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -16,7 +16,7 @@ public class JwtService {
 
     private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    // Expiração de 1 dia (em milissegundos)
+    // Expiração de 1 minuto (em milissegundos)
     private static final long JWT_EXPIRATION = 60000;
 
     public String extractUsername(String token) {
