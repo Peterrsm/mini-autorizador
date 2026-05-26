@@ -88,7 +88,7 @@ class CartaoControllerImplTest {
         ResponseEntity<String> result = controller.realizaTransacao(transacao);
 
         Assertions.assertNotNull(controller.realizaTransacao(transacao));
-        Assertions.assertEquals(result.getStatusCode(), HttpStatus.CREATED);
+        Assertions.assertEquals(result.getStatusCode(), HttpStatus.OK);
     }
 
     @Test

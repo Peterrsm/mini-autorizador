@@ -1,4 +1,4 @@
-package com.pedromiranda.miniautorizador.controller.impl;
+package com.pedromiranda.miniautorizador.controller;
 
 import com.pedromiranda.miniautorizador.security.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;

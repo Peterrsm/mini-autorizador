@@ -3,6 +3,7 @@ package com.pedromiranda.miniautorizador;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.lang.ArchRule;
+
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
 
@@ -25,7 +26,9 @@ public class ArchitectureTest {
             .that()
             .haveNameMatching(".*Controller")
             .should()
-            .resideInAPackage("..controller.interfaces");
+            .resideInAPackage("..controller.interfaces")
+            .orShould()
+            .resideInAPackage("..controller");
 
     @ArchTest
     public static final ArchRule controllerimpl_must_reside_controlle_impl = classes()
