@@ -8,7 +8,21 @@ mini-autorizador is a Java Spring Boot service that simulates creation and use o
 
 ## Usage
 
-Use the docker-compose to initialize a local MySQL instance with a database named 'miniautorizador'.
+### Prerequisites
+
+Before running the application, make sure you have [Docker](https://www.docker.com/) and **Docker Compose** installed on
+your machine.
+
+### 1. Starting the Database
+
+The project includes a `docker-compose.yml` file configured to initialize a local MySQL instance with a database named
+`miniautorizador`.
+
+To start the database container in the background, run the following command in the root directory of the project:
+
+```bash
+docker compose up -d
+```
 
 ### Authentication (JWT)
 
