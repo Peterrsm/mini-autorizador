@@ -31,8 +31,8 @@ public class CartaoServiceImpl implements ICartaoService {
     @Override
     public CartaoDTO cadastraCartao(CartaoDTO cartao_dto) {
         try {
-            log.info("Inserindo novo cartão com número: {}", cartao_dto.getNumeroCartao());
-            log.info("{}", cartao_dto.toString());
+            log.info("Inserindo novo cartão com número: {}", cartao_dto.numeroCartao());
+            log.info("{}", cartao_dto);
             Cartao cartao = mapper.toCartao(cartao_dto);
 
             return CartaoDTO.toDTO(repository.save(cartao));
@@ -50,13 +50,16 @@ public class CartaoServiceImpl implements ICartaoService {
             throw new CardNotFoundException();
         }
 
-        return ResponseCartaoSaldo.cartaoToResponseCartaoSaldo(cartao);
+        return ResponseCartaoSaldo.from(cartao);
     }
 
     @Override
-    public List getCartoes() {
+    public List<CartaoDTO> getCartoes() {
         try {
-            return repository.findAll();
+            return repository.findAll()
+                    .stream()
+                    .map(CartaoDTO::toDTO)
+                    .toList();
         } catch (Exception e) {
             log.error("Erro ao buscar todos os cartões", e);
             throw e;

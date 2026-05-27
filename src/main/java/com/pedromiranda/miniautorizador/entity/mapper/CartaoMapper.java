@@ -12,8 +12,8 @@ public class CartaoMapper implements ICartaoMapper {
     @Override
     public Cartao toCartao(CartaoDTO cartao_dto) {
         return Cartao.CartaoBuilder.builder()
-                .numeroCartao(new CardNumber(cartao_dto.getNumeroCartao()))
-                .senha(new Senha(cartao_dto.getSenha()))
+                .numeroCartao(new CardNumber(cartao_dto.numeroCartao()))
+                .senha(new Senha(cartao_dto.senha()))
                 .build();
     }
 }

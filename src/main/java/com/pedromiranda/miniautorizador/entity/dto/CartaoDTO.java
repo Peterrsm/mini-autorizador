@@ -2,47 +2,13 @@ package com.pedromiranda.miniautorizador.entity.dto;
 
 import com.pedromiranda.miniautorizador.entity.Cartao;
 
-public class CartaoDTO {
-    private String numeroCartao;
-    private String senha;
-
-    public CartaoDTO() {
-    }
-
-    public CartaoDTO(String numeroCartao, String senha) {
-        this.numeroCartao = numeroCartao;
-        this.senha = senha;
-    }
+public record CartaoDTO(String numeroCartao, String senha, String saldo) {
 
     public static CartaoDTO toDTO(Cartao cartao) {
-        CartaoDTO dto = new CartaoDTO();
-        dto.setNumeroCartao(cartao.getNumeroCartao().toString());
-        dto.setSenha(cartao.getSenha().toString());
-
-        return dto;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    private void setNumeroCartao(String numeroCartao) {
-        this.numeroCartao = numeroCartao;
-    }
-
-    public String getNumeroCartao() {
-        return numeroCartao;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    @Override
-    public String toString() {
-        return "CartaoDTO{" +
-                "numeroCartao='" + numeroCartao + '\'' +
-                ", senha='" + senha + '\'' +
-                '}';
+        return new CartaoDTO(
+                cartao.getNumeroCartao().toString(),
+                cartao.getSenha().toString(),
+                cartao.getSaldo().toString()
+        );
     }
 }
