@@ -4,6 +4,7 @@ import com.pedromiranda.miniautorizador.entity.CardNumber;
 import com.pedromiranda.miniautorizador.entity.Transacao;
 import com.pedromiranda.miniautorizador.entity.dto.CartaoDTO;
 import com.pedromiranda.miniautorizador.entity.dto.ResponseCartaoSaldo;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public interface ICartaoService {
 
     List<CartaoDTO> getCartoes();
 
+    @Transactional
     String realizaTransacao(Transacao transacao);
 
 }
