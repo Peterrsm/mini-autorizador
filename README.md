@@ -29,8 +29,8 @@ docker compose up -d
 The API uses stateless JWT (JSON Web Token) authentication to protect its endpoints. Before making requests to the card
 or transaction services, you must obtain a valid token.
 
-> ⚠️ **Important Note:** For security reasons, the generated access token has a short lifespan and **expires after 1
-minute**. If you receive a `401 Unauthorized` status, you must request a new token.
+> ⚠️ **Important Note:** For security reasons, the generated access token has a short lifespan and **expires after 5
+minutes**. If you receive a `401 Unauthorized` status, you must request a new token.
 
 #### 1. Generating a Token
 
