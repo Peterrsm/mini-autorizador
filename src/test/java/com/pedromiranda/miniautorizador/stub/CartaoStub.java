@@ -2,8 +2,11 @@ package com.pedromiranda.miniautorizador.stub;
 
 import com.pedromiranda.miniautorizador.entity.CardNumber;
 import com.pedromiranda.miniautorizador.entity.Cartao;
+import com.pedromiranda.miniautorizador.entity.Saldo;
 import com.pedromiranda.miniautorizador.entity.Senha;
 import com.pedromiranda.miniautorizador.entity.dto.CartaoDTO;
+
+import java.math.BigDecimal;
 
 public class CartaoStub {
     public Cartao createCartao() {
@@ -18,6 +21,7 @@ public class CartaoStub {
 
         cartao.setSenha(new Senha("12345678"));
         cartao.setNumeroCartao(new CardNumber("102030405060"));
+        cartao.setSaldo(new Saldo(BigDecimal.valueOf(500)));
 
         return CartaoDTO.toDTO(cartao);
     }

@@ -54,14 +54,14 @@ class CartaoControllerImplTest {
         Cartao cartao = stub.createCartao();
 
         Mockito.when(service.getCartaoByNumeroCartao(new CardNumber("102030405060")))
-                .thenReturn(ResponseCartaoSaldo.cartaoToResponseCartaoSaldo(cartao));
+                .thenReturn(ResponseCartaoSaldo.from(cartao));
 
         ResponseEntity<ResponseCartaoSaldo> result = controller.getCartaoByNumeroCartao(new CardNumber("102030405060"));
 
         Assertions.assertNotNull(controller.getCartaoByNumeroCartao(new CardNumber("102030405060")));
         Assertions.assertEquals(result.getStatusCode(), HttpStatus.OK);
         Assertions.assertEquals(result.getStatusCodeValue(), 200);
-        Assertions.assertEquals(result.getBody().getSaldo(), BigDecimal.valueOf(500));
+        Assertions.assertEquals(result.getBody().saldo(), BigDecimal.valueOf(500));
     }
 
     @Test
@@ -76,8 +76,8 @@ class CartaoControllerImplTest {
 
         Assertions.assertNotNull(controller.cadastraCartao(cartao_dto));
         Assertions.assertEquals(result.getStatusCode(), HttpStatus.CREATED);
-        Assertions.assertEquals(result.getBody().getNumeroCartao(), "102030405060");
-        Assertions.assertEquals(result.getBody().getSenha(), "12345678");
+        Assertions.assertEquals(result.getBody().numeroCartao(), "102030405060");
+        Assertions.assertEquals(result.getBody().senha(), "12345678");
 
     }
 

@@ -23,7 +23,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 
 @ExtendWith(MockitoExtension.class)
 class CartaoServiceTest {
@@ -59,8 +58,8 @@ class CartaoServiceTest {
         CartaoDTO result = service.cadastraCartao(dto);
 
         Assertions.assertNotNull(result);
-        Assertions.assertEquals(result.getNumeroCartao(), "102030405060");
-        Assertions.assertNotNull(result.getSenha(), "12345678");
+        Assertions.assertEquals(result.numeroCartao(), "102030405060");
+        Assertions.assertNotNull(result.senha(), "12345678");
     }
 
     @Test
@@ -73,7 +72,7 @@ class CartaoServiceTest {
         ResponseCartaoSaldo result = service.getCartaoByNumeroCartao(new CardNumber("102030405060"));
 
         Assertions.assertNotNull(result);
-        Assertions.assertEquals(result.getSaldo(), BigDecimal.valueOf(500));
+        Assertions.assertEquals(result.saldo(), BigDecimal.valueOf(500));
     }
 
     @Test
@@ -98,16 +97,16 @@ class CartaoServiceTest {
     }
 
     @Test
-    void shouldReturnCardListWiothSuccess() {
+    void shouldReturnCardListWithhSuccess() {
         List<Cartao> listaMock = List.of(stub.createCartao());
         Mockito.when(repository.findAll()).thenReturn(listaMock);
 
-        List<Cartao> resultado = service.getCartoes();
+        List<CartaoDTO> resultado = service.getCartoes();
 
         Assertions.assertFalse(resultado.isEmpty());
         Assertions.assertEquals(1, resultado.size());
 
-        Assertions.assertEquals(listaMock.get(0).getNumeroCartao(), resultado.get(0).getNumeroCartao());
+        Assertions.assertEquals(listaMock.get(0).getNumeroCartao().toString(), resultado.get(0).numeroCartao());
     }
 
     @Test
